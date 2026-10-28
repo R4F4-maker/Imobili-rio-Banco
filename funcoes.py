@@ -112,6 +112,8 @@ def tentativa_prisao(
     dinheiro
 ):
 
+    movimento = 0
+
     tentativas_prisao += 1
 
     print("\nVocê está preso!")
@@ -138,6 +140,8 @@ def tentativa_prisao(
         print(
             "Você saiu da prisão!"
         )
+
+        movimento = dado1 + dado2
 
         rodadas_preso = 0
         tentativas_prisao = 0
@@ -168,5 +172,6 @@ def tentativa_prisao(
     return (
         rodadas_preso,
         tentativas_prisao,
-        dinheiro
+        dinheiro,
+        movimento
     )

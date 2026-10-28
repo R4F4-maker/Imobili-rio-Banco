@@ -49,6 +49,8 @@ posicao = 0
 dados_iguais_seguidos = 0
 rodadas_preso = 4
 tentativas_prisao = 0
+movimento = 0
+
 
 print(f"Jogador: {nome}")
 print(f"Dinheiro: ${dinheiro}")
@@ -303,12 +305,31 @@ while rodada <= 200:
         (
             rodadas_preso,
             tentativas_prisao,
-            dinheiro
+            dinheiro,
+            movimento 
         ) = tentativa_prisao(
             rodadas_preso,
             tentativas_prisao,
             dinheiro
         )
+
+        if movimento > 0:
+
+            posicao += movimento
+
+            print(
+                f"Você andou "
+                f"{movimento} casas."
+            )
+
+            print(
+                f"Nova posição: "
+                f"{posicao}"
+            )
+
+        if rodadas_preso > 0:
+
+            jogador_joga = False
 
 
     else:
