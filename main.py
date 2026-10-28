@@ -7,7 +7,8 @@ from funcoes import (
     carta_cofre,
     cobrar_taxa,
     decidir_compra,
-    tentativa_prisao
+    tentativa_prisao,
+    escolher_opcao
 )
 
 nomes_disponiveis = [
@@ -47,14 +48,13 @@ dinheiro = 1500
 
 posicao = 0
 dados_iguais_seguidos = 0
-rodadas_preso = 4
+rodadas_preso = 3
 tentativas_prisao = 0
 movimento = 0
 
 
 print(f"Jogador: {nome}")
 print(f"Dinheiro: ${dinheiro}")
-print(f"Posição: {posicao}")
 
 posicoes_bots = [0, 0, 0, 0]
 preso_bots = [0, 0, 0, 0]
@@ -69,8 +69,9 @@ for i in range(len(bots)):
         f"{bots[i]} "
         f"({tipos_bots[i]})"
     )
+
 tabuleiro = [
-    "Partida",                    # 0
+    "Início",                     # 0
     "Avenida Mediterranea",       # 1
     "Cofre",                      # 2
     "Avenida Baltica",            # 3
@@ -284,10 +285,7 @@ propriedades = {
         "dono": None
     }
 
-
-
 }
-print(f"Você parou em: {tabuleiro[posicao]}")
 
 print("\nCasa atual:")
 print(tabuleiro[posicao])
@@ -317,6 +315,15 @@ while rodada <= 200:
 
             posicao += movimento
 
+            if posicao >= len(tabuleiro):
+
+                posicao -= len(tabuleiro)
+
+                dinheiro += 200
+
+                print("Você passou pela partida!")
+                print("Você ganhou $200!")
+
             print(
                 f"Você andou "
                 f"{movimento} casas."
@@ -331,12 +338,46 @@ while rodada <= 200:
 
             jogador_joga = False
 
-
     else:
 
         if jogador_joga:
 
-            input("\nPressione ENTER para jogar o dado")
+            opcao = escolher_opcao()
+
+            while opcao == "2":
+
+                print("\n===== PROPRIEDADES =====")
+
+                propriedades_por_dono = {}
+
+                for nome_prop, dados_prop in propriedades.items():
+
+                    if dados_prop["dono"] is not None:
+
+                        dono = dados_prop["dono"]
+
+                        if dono not in propriedades_por_dono:
+
+                            propriedades_por_dono[dono] = []
+
+                        propriedades_por_dono[dono].append(nome_prop)
+
+                if not propriedades_por_dono:
+
+                    print("Nenhuma propriedade comprada.")
+
+                else:
+
+                    for dono, lista in propriedades_por_dono.items():
+
+                        print(f"\n{dono}:")
+
+                        for prop in lista:
+
+                            print(f" - {prop}")
+
+                opcao = escolher_opcao()
+
 
             dado1, dado2 = jogar_dado()
 

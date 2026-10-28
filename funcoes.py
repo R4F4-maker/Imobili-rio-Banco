@@ -175,3 +175,17 @@ def tentativa_prisao(
         dinheiro,
         movimento
     )
+
+def escolher_opcao():
+
+    print("\n========================")
+    print("1 - Jogar")
+    print("2 - Mostrar propriedades")
+    print("========================")
+
+    opcao = input("Escolha: ")
+
+    if opcao == "":
+        opcao = "1"
+
+    return opcao
