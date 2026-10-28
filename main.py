@@ -8,7 +8,8 @@ from funcoes import (
     cobrar_taxa,
     decidir_compra,
     tentativa_prisao,
-    escolher_opcao
+    escolher_opcao,
+    verificar_monopolio
 )
 
 nomes_disponiveis = [
@@ -43,12 +44,12 @@ nome = input("Digite seu nome: ")
 if nome == "":
     nome = "Jogador"
 
-dinheiro = 1500
+dinheiro = 15000
 #dinheiro = 500
 
 posicao = 0
 dados_iguais_seguidos = 0
-rodadas_preso = 3
+rodadas_preso = 0
 tentativas_prisao = 0
 movimento = 0
 
@@ -130,160 +131,299 @@ cartas_cofre = [
 propriedades = {
 
     "Avenida Mediterranea": {
+        "cor": "Marrom",
         "preco": 60,
         "aluguel": 10,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Baltica": {
+        "cor": "Marrom",
         "preco": 60,
         "aluguel": 20,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Oriental": {
+        "cor": "Azul Claro",
         "preco": 100,
         "aluguel": 30,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Vermont": {
+        "cor": "Azul Claro",
         "preco": 100,
         "aluguel": 30,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Connecticut": {
+        "cor": "Azul Claro",
         "preco": 120,
         "aluguel": 40,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida dos Estados": {
+        "cor": "Roxo",
         "preco": 140,
         "aluguel": 50,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Virginia": {
+        "cor": "Roxo",
         "preco": 160,
         "aluguel": 60,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Tennessee": {
+        "cor": "Roxo",
         "preco": 180,
         "aluguel": 70,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Nova York": {
+        "cor": "Laranja",
         "preco": 200,
         "aluguel": 80,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Kentucky": {
+        "cor": "Laranja",
         "preco": 220,
         "aluguel": 90,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Indiana": {
+        "cor": "Laranja",
         "preco": 220,
         "aluguel": 90,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Illinois": {
+        "cor": "Vermelho",
         "preco": 240,
         "aluguel": 100,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Atlantica": {
+        "cor": "Vermelho",
         "preco": 260,
         "aluguel": 110,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Ventnor": {
+        "cor": "Vermelho",
         "preco": 260,
         "aluguel": 110,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Jardins Marvin": {
+        "cor": "Amarelo",
         "preco": 280,
         "aluguel": 120,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Pacifica": {
+        "cor": "Amarelo",
         "preco": 300,
         "aluguel": 130,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Carolina do Norte": {
+        "cor": "Amarelo",
         "preco": 300,
         "aluguel": 130,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Avenida Pennsylvania": {
+        "cor": "Verde",
         "preco": 320,
         "aluguel": 150,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Praca Park Place": {
+        "cor": "Verde",
         "preco": 350,
         "aluguel": 175,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Calcadao Boardwalk": {
+        "cor": "Azul Escuro",
         "preco": 400,
         "aluguel": 200,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Ferrovia Reading": {
+        "cor": "Ferrovias",
         "preco": 200,
         "aluguel": 50,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Ferrovia Pennsylvania": {
+        "cor": "Ferrovias",
         "preco": 200,
         "aluguel": 50,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Ferrovia B&O": {
+        "cor": "Ferrovias",
         "preco": 200,
         "aluguel": 50,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Ferrovia Short Line": {
+        "cor": "Ferrovias",
         "preco": 200,
         "aluguel": 50,
+        "casas": 0,
+        "hotel": False,
         "dono": None
     },
 
     "Companhia Eletrica": {
-    "preco": 150,
-    "aluguel": 40,
-    "dono": None
+        "cor": "Companhias",
+        "preco": 150,
+        "aluguel": 40,
+        "casas": 0,
+        "hotel": False,
+        "dono": None
     },
 
     "Companhia de Agua": {
+        "cor": "Companhias",
         "preco": 150,
         "aluguel": 40,
+        "casas": 0,
+        "hotel": False,
         "dono": None
-    }
+    },
+
+
+
+}
+
+grupos = {
+    "Marrom": [
+        "Avenida Mediterranea",
+        "Avenida Baltica"
+    ],
+
+    "Azul Claro": [
+        "Avenida Oriental",
+        "Avenida Vermont",
+        "Avenida Connecticut"
+    ],
+
+    "Rosa": [
+        "Avenida dos Estados",
+        "Avenida Virginia",
+        "Avenida Tennessee"
+    ],
+
+    "Laranja": [
+        "Avenida Nova York",
+        "Avenida Kentucky",
+        "Avenida Indiana"
+    ],
+
+    "Vermelho": [
+        "Avenida Illinois",
+        "Avenida Atlantica",
+        "Avenida Ventnor"
+    ],
+
+    "Amarelo": [
+        "Jardins Marvin",
+        "Avenida Pacifica",
+        "Avenida Carolina do Norte"
+    ],
+
+    "Verde": [
+        "Avenida Pennsylvania",
+        "Praca Park Place"
+    ],
+
+    "Azul Escuro": [
+        "Calcadao Boardwalk"
+    ],
+
+    "Ferrovias": [
+        "Ferrovia Reading",
+        "Ferrovia Pennsylvania",
+        "Ferrovia B&O",
+        "Ferrovia Short Line"
+    ],
+
+    "Companhias": [
+        "Companhia Eletrica",
+        "Companhia de Agua"
+    ]
 
 }
 
@@ -512,6 +652,22 @@ while rodada <= 200:
 
                         print("Propriedade comprada!")
 
+                        monopolios = verificar_monopolio(
+                            nome,
+                            grupos,
+                            propriedades
+                        )
+
+                        for cor in monopolios:
+
+                            print("\n====================")
+                            print("MONOPÓLIO COMPLETO!")
+                            print(
+                                f"{nome} possui todas "
+                                f"as propriedades da cor {cor}"
+                            )
+                            print("====================")
+
                     else:
 
                         print("Dinheiro insuficiente!")
@@ -685,7 +841,27 @@ while rodada <= 200:
                     print(
                         f"{bots[i]} comprou "
                         f"{casa_bot}"
+
                     )
+
+                    monopolios = verificar_monopolio(
+                        bots[i],
+                        grupos,
+                        propriedades
+                    )
+
+                    for cor in monopolios:
+
+                        print("\n====================")
+                        print("MONOPÓLIO COMPLETO!")
+
+                        print(
+                            f"{bots[i]} possui todas "
+                            f"as propriedades da cor {cor}"
+                        )
+
+                        print("====================")
+                    
 
                     print(
                         f"Saldo do {bots[i]}: "

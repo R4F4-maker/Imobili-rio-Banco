@@ -189,3 +189,33 @@ def escolher_opcao():
         opcao = "1"
 
     return opcao
+
+def verificar_monopolio(
+    jogador,
+    grupos,
+    propriedades
+):
+
+    monopolios = []
+
+    for cor, lista_props in grupos.items():
+
+        possui_todas = True
+
+        for prop in lista_props:
+
+            for prop in lista_props:
+
+                print(prop)
+
+
+            if propriedades[prop]["dono"] != jogador:
+
+                possui_todas = False
+                break
+
+        if possui_todas:
+
+            monopolios.append(cor)
+
+    return monopolios
