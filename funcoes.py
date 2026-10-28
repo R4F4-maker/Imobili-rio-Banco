@@ -148,7 +148,9 @@ def tentativa_prisao(
             "Você continua preso."
         )
 
-        if tentativas_prisao >= 3:
+        rodadas_preso -= 1
+
+        if tentativas_prisao == 3:
 
             dinheiro -= 50
 

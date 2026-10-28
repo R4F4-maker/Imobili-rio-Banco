@@ -42,11 +42,12 @@ nome = input("Digite seu nome: ")
 if nome == "":
     nome = "Jogador"
 
-#dinheiro = 1500
-dinheiro = 500
+dinheiro = 1500
+#dinheiro = 500
 
 posicao = 0
-rodadas_preso = 2
+dados_iguais_seguidos = 0
+rodadas_preso = 4
 tentativas_prisao = 0
 
 print(f"Jogador: {nome}")
